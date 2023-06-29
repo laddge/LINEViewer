@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import sqlite3 from 'sqlite3'
 import { open } from 'sqlite'
 
@@ -6,6 +7,7 @@ import { open } from 'sqlite'
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 8080
 const app = express()
 
+app.use(cors())
 app.use(express.static('dist'))
 
 app.get('/api/list', async (_, res) => {
