@@ -36,10 +36,10 @@ app.get('/api/chat/:id', async (req, res) => {
   })
 
   const names = {}
-  for (const contact of await db.all(`select m_id, name from contacts where m_id = \'${req.params.id}\'`)) {
+  for (const contact of await db.all('select m_id, name from contacts')) {
     names[contact.m_id] = contact.name
   }
-  for (const group of await db.all(`select id, name from groups where id = \'${req.params.id}\'`)) {
+  for (const group of await db.all('select id, name from groups')) {
     names[group.id] = group.name
   }
 
