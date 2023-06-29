@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue'
+  import { RouterLink } from 'vue-router'
   import axios from 'axios'
 
   interface Chat {
@@ -21,6 +22,11 @@
 </script>
 
 <template>
+  <header>
+    <div class="navbar">
+      <RouterLink to="/" class="btn btn-ghost normal-case text-xl">LINE Viewer</RouterLink>
+    </div>
+  </header>
   <main>
     <ul>
       <li v-for="chat in chats">
