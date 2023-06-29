@@ -21,7 +21,7 @@ app.get('/api/list', async (_, res) => {
     chat.last_created_time = new Date(parseInt(chat.last_created_time))
     let chat_name = (await db.get(`select name from contacts where m_id = \'${chat.chat_id}\'`))
     if (!chat_name) {
-      let chat_name = (await db.get(`select name from groups where id = \'${chat.chat_id}\'`))
+      chat_name = (await db.get(`select name from groups where id = \'${chat.chat_id}\'`))
     }
     chat.chat_name = chat_name ? chat_name.name : '#unknown#'
   }
