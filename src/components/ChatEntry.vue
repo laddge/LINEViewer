@@ -13,14 +13,16 @@
 </script>
 
 <template>
-  <div class="border-y p-6">
-    <div class="flex items-center">
-      <div class="grow">
-        <RouterLink :to="`/chat/${chat.chat_id}`" class="btn btn-ghost normal-case text-lg">
+  <div class="border-t px-4 py-6">
+    <div class="flex items-center gap-2">
+      <div class="flex-1 overflow-hidden">
+        <RouterLink :to="`/chat/${chat.chat_id}`" class="btn btn-ghost normal-case text-lg font-bold max-w-full">
+          <p class="truncate">
           {{ chat.chat_name }}
+          </p>
         </RouterLink>
       </div>
-      <div class="flex-none">
+      <div class="flex-0">
         {{ format(new Date(chat.last_created_time), 'M/d/yy H:mm') }}
       </div>
     </div>

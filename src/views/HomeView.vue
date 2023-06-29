@@ -30,7 +30,7 @@
   </header>
   <main>
     <ul>
-      <li v-for="chat in chats">
+      <li v-for="chat in chats" class="mx-4">
         <ChatEntry :chat="chat" />
       </li>
     </ul>
