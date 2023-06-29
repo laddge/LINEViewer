@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue'
   import { RouterLink } from 'vue-router'
+  import ChatEntry from '@/components/ChatEntry.vue'
   import axios from 'axios'
 
   interface Chat {
@@ -30,7 +31,7 @@
   <main>
     <ul>
       <li v-for="chat in chats">
-        {{ chat.chat_name }}
+        <ChatEntry :chat="chat" />
       </li>
     </ul>
   </main>
