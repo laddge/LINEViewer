@@ -10,9 +10,9 @@ app.use(express.static('dist'))
 
 app.get('/api/list', async (_, res) => {
   const db = await open({
-      filename: '/data/data/jp.naver.line.android/databases/naver_line',
-      driver: sqlite3.Database
-    })
+    filename: '/data/data/jp.naver.line.android/databases/naver_line',
+    driver: sqlite3.Database
+  })
   const chats = await db.all('select chat_id, last_message, last_created_time from chat')
 
   for (const chat of chats) {
@@ -25,6 +25,44 @@ app.get('/api/list', async (_, res) => {
   }
 
   res.status(200).json(chats)
+})
+
+app.get('/api/chat/:id', async (req, res) => {
+  const db = await open({
+    filename: '/data/data/jp.naver.line.android/databases/naver_line',
+    driver: sqlite3.Database
+  })
+
+  const names = {}
+  for (const contact of await db.all(`select m_id, name from contacts where m_id = \'${req.params.id}\'`)) {
+    names[contact.m_id] = contact.name
+  }
+  for (const group of await db.all(`select id, name from groups where id = \'${req.params.id}\'`)) {
+    names[group.id] = group.name
+  }
+
+  const chat = {
+    name: names[req.params.id] || '#unknown#',
+    messages: [],
+  }
+
+  const messages = await db.all(`select from_mid, created_time, content from chat_history where chat_id = \'${req.params.id}\'`)
+  for (const message of messages) {
+    if (message.from_mid) {
+      chat.messages.push({
+        from_name: names[message.from_mid] || '#unknown#',
+        content: message.content,
+        created_time: new Date(parseInt(message.created_time))
+      })
+    } else {
+      chat.messages.push({
+        content: message.content,
+        created_time: new Date(parseInt(message.created_time))
+      })
+    }
+  }
+
+  res.status(200).json(chat)
 })
 
 app.listen(PORT, '0.0.0.0', (err) => {
