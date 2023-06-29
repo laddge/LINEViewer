@@ -41,7 +41,7 @@
   <div v-if="!chat" class="h-screen flex justify-center items-center">
     <span class="loading loading-spinner loading-lg"></span>
   </div>
-  <div ref="view" v-else class="mx-2 overflow-hidden">
+  <div ref="view" v-else class="mx-2 overflow-hidden break-words py-6">
     <div v-for="message in chat.messages.sort((a, b) => (new Date(a.created_time)).getTime() - (new Date(b.created_time)).getTime())">
       <div v-if="message.content" :class="`chat ${message.from_name ? 'chat-start' : 'chat-end'}`">
         <div class="chat-header">
